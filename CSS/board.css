@@ -173,7 +173,7 @@ body {
     font-family: "Jost", sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--text-secondary);
+    color: var(--accent-gold);
     line-height: 1.5;
     letter-spacing: 0.03em;
     max-width: 26ch;
