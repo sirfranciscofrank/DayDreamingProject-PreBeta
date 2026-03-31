@@ -3,29 +3,61 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day Dreaming</title>
+    <title>Day Dreaming | Tasks</title>
+    
+    <!-- Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="CSS/board.css">
 </head>
+
 <body>
     <main class="hero">
+        <!-- Dreamy Atmosphere -->
         <div class="cloud cloud-1"></div>
         <div class="cloud cloud-2"></div>
         <div class="cloud cloud-3"></div>
         <div class="cloud cloud-4"></div>
-        <div class="cloud cloud-5"></div>
-        <div class="cloud cloud-6"></div>
 
-        
+        <header class="header-wrap">
+            <!-- 1. LEFT SECTION: Burger Actions -->
+            <div class="burger-wrap">
+                   <h1 class="menu-label">Task Menu</h1>
+                <div class="icon-group">
+                    <button class="action-btn" title="Add Cloud">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <button class="action-btn" title="To-Do List">
+                        <i class="fa-solid fa-note-sticky"></i>
+                    </button>
+                    <button class="action-btn" title="Delete">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+             
+            </div>
 
-        <div class="title-wrap">
-            <h1>Day Dreaming</h1>
-            <div class="logo-divider"></div>
-        </div>
+            <!-- 2. CENTER SECTION: Title -->
+            <div class="title-wrap">
+                <h1>Day Dreaming</h1>
+                <div class="logo-divider"></div>
+            </div>
+
+            <!-- 3. RIGHT SECTION: Clock -->
+            <div class="timestamp-wrap">
+                <h1 class="label">Current Time</h1>
+                  <h1 class="timestamp-text" id="clock">00:00</h1>
+                  
+            </div>
+        </header>
+
     </main>
+
+   <script src="JS/board.js"></script>
 </body>
 </html>
