@@ -95,25 +95,7 @@ body {
     animation: pulse 9s ease-in-out infinite;
 }
 
-/* horizon */
-.horizon-line {
-    position: absolute;
-    bottom: 28%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(232, 201, 138, 0.35) 18%,
-        rgba(232, 201, 138, 0.82) 50%,
-        rgba(232, 201, 138, 0.35) 82%,
-        transparent 100%
-    );
-    box-shadow: 0 0 22px rgba(232, 201, 138, 0.35);
-}
+
 
 /* ===== LOGO — fixed top center ===== */
 .title-wrap {
