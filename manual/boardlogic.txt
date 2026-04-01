@@ -1,0 +1,11 @@
+Now the simpler meaning of the whole flow is:
+
+1.wait for page to load
+2.start live clock
+3.when user clicks Add Cloud, open modal
+4.user types title and description
+5.when user clicks Create, read input values
+6.store them in an object
+7.push that object into clouds
+8.create a real HTML cloud note
+9.append it to cloudContainer
