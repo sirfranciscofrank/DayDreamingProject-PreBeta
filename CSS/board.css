@@ -175,14 +175,19 @@ body {
 }
 
 .timestamp-text {
-    max-width: 26ch;
-    word-break: break-word;
     font-family: "Jost", sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--accent-gold);
     line-height: 1.5;
     letter-spacing: 0.03em;
+
+    white-space: nowrap;
+    word-break: normal;
+    max-width: none;
+
+    font-variant-numeric: tabular-nums;
+    min-width: 18ch;
 }
 
 /* ===== 8. BOARD / WORKSPACE ===== */
@@ -211,6 +216,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.88);
