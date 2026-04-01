@@ -6,42 +6,43 @@
 }
 
 :root {
-    /* Palette */
     --text-primary: #122136;
     --text-secondary: #405a7d;
     --accent-gold: #b38d3e;
 
-    /* Sky Gradient */
     --sky-top: #a8c4de;
     --sky-mid: #e1f1fd;
     --sky-bottom: #f6e6d8;
 
-    /* Glass Effect */
     --glass-bg: rgba(255, 255, 255, 0.72);
     --glass-border: rgba(255, 255, 255, 0.9);
     --glass-shadow: 0 10px 40px rgba(70, 99, 172, 0.12);
+
+    --header-space-desktop: 150px;
+    --header-space-mobile: 220px;
 }
 
+/* ===== 2. BASE ===== */
 body {
     font-family: "Jost", sans-serif;
     color: var(--text-primary);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 }
 
-/* ===== 2. BACKGROUND & ATMOSPHERE ===== */
+/* ===== 3. PAGE SHELL ===== */
 .hero {
     position: relative;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     overflow: hidden;
+    padding-top: var(--header-space-desktop);
     background:
         radial-gradient(circle at 50% 110%, var(--sky-bottom), transparent 60%),
         linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 50%, #ffffff 100%);
 }
 
-/* Film Grain Texture */
 .hero::after {
     content: "";
     position: absolute;
@@ -52,7 +53,7 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
-/* ===== 3. HEADER SYSTEM (THE GLASS PANELS) ===== */
+/* ===== 4. HEADER ===== */
 .header-wrap {
     position: absolute;
     top: 0;
@@ -103,29 +104,31 @@ body {
     padding-inline: 1.4rem;
 }
 
-.header-wrap > div:hover {
+.header-wrap>div:hover {
     background: rgba(255, 255, 255, 0.85);
     transform: translateY(2px);
 }
 
-/* ===== 4. BURGER WRAP CONTENT (ICONS) ===== */
+/* ===== 5. TASK MENU ===== */
 .icon-group {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
 .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
     background: none;
     border: none;
     color: var(--text-secondary);
     font-size: 1.3rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .action-btn:hover {
@@ -141,10 +144,14 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.2em;
     color: var(--text-secondary);
-    opacity: 1;
 }
 
-/* ===== 5. CENTER TITLE LOGO ===== */
+.burger-wrap .menu-label {
+    width: 100%;
+    text-align: center;
+}
+
+/* ===== 6. TITLE ===== */
 .title-wrap h1 {
     font-family: "Cormorant Garamond", serif;
     font-weight: 500;
@@ -160,34 +167,72 @@ body {
     background: var(--accent-gold);
 }
 
-/* ===== 6. TIMESTAMP ===== */
+/* ===== 7. CLOCK ===== */
 .timestamp-wrap .label {
-    font-weight: 900;
+    margin-bottom: 0.45rem;
     font-size: 1rem;
     letter-spacing: 0.22em;
-    opacity: 1;
-    margin-bottom: 0.45rem;
 }
 
 .timestamp-text {
+    max-width: 26ch;
+    word-break: break-word;
     font-family: "Jost", sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--accent-gold);
     line-height: 1.5;
     letter-spacing: 0.03em;
-    max-width: 26ch;
-    word-break: break-word;
 }
 
-/* ===== 7. CLOUDS ===== */
+/* ===== 8. BOARD / WORKSPACE ===== */
+.board-area {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - var(--header-space-desktop));
+    z-index: 5;
+}
+
+#cloudContainer {
+    position: absolute;
+    inset: 0;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.cloud-note {
+    position: absolute;
+    z-index: 16;
+    transform: translate(-50%, -50%);
+    min-width: 120px;
+    min-height: 60px;
+    padding: 0.9rem 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 30px rgba(70, 99, 172, 0.14);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    font-family: "Jost", sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    pointer-events: auto;
+}
+
+/* ===== 9. DECORATIVE CLOUDS ===== */
 .cloud {
     position: absolute;
+    z-index: 1;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 100px;
     filter: blur(4px);
     animation: drift 40s linear infinite;
-    z-index: 1;
 }
 
 .cloud-1 {
@@ -201,8 +246,8 @@ body {
 .cloud-2 {
     width: 250px;
     height: 80px;
-    bottom: 30%;
     right: 10%;
+    bottom: 30%;
     opacity: 0.3;
     animation-delay: -5s;
 }
@@ -215,12 +260,13 @@ body {
     opacity: 0.2;
 }
 
-/* ===== 8. ANIMATIONS ===== */
+/* ===== 10. ANIMATIONS ===== */
 @keyframes dropIn {
     from {
         opacity: 0;
         transform: translateY(-100%);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -231,28 +277,283 @@ body {
     0% {
         transform: translateX(-100px);
     }
+
     100% {
         transform: translateX(200px);
     }
 }
 
-/* ===== 9. MOBILE RESPONSIVE ===== */
-@media (max-width: 768px) {
+/* ===== 11. TABLET ===== */
+@media (max-width: 1024px) {
     .header-wrap {
-        padding: 0 1rem;
-        gap: 0.5rem;
-    }
-
-    .timestamp-wrap {
-        display: none;
+        padding: 0 2rem;
+        gap: 0.8rem;
     }
 
     .burger-wrap,
+    .title-wrap,
+    .timestamp-wrap {
+        max-width: 100%;
+        min-height: 100px;
+    }
+
+    .title-wrap h1 {
+        font-size: clamp(1.3rem, 2.4vw, 2rem);
+    }
+}
+
+/* ===== 12. MOBILE ===== */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .hero {
+        min-height: 100vh;
+        height: auto;
+        padding-top: var(--header-space-mobile);
+        padding-bottom: 2rem;
+    }
+
+    .header-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 1rem;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "title title"
+            "task time";
+        gap: 0.7rem;
+        align-items: stretch;
+    }
+
+    .title-wrap,
+    .burger-wrap,
+    .timestamp-wrap {
+        width: 100%;
+        max-width: 100%;
+        min-height: 96px;
+        padding: 1rem;
+        border: 1.5px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+    }
+
     .title-wrap {
-        padding: 0.8rem;
+        grid-area: title;
+        align-items: center;
+        text-align: center;
+        border-radius: 0 0 1.4rem 1.4rem;
+    }
+
+    .burger-wrap {
+        grid-area: task;
+        align-items: center;
+        text-align: center;
+        border-radius: 1.4rem;
+    }
+
+    .timestamp-wrap {
+        grid-area: time;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding-inline: 1rem;
+        border-radius: 1.4rem;
+    }
+
+    .icon-group {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
     }
 
     .action-btn {
         font-size: 1rem;
+        padding: 6px;
+    }
+
+    .menu-label,
+    .label {
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+    }
+
+    .title-wrap h1 {
+        font-size: clamp(1.2rem, 6vw, 1.8rem);
+    }
+
+    .timestamp-wrap .label {
+        margin-bottom: 0.3rem;
+    }
+
+    .timestamp-text {
+        max-width: 100%;
+        text-align: center;
+        font-size: 0.78rem;
+        line-height: 1.4;
+    }
+
+    .board-area {
+        min-height: calc(100vh - var(--header-space-mobile));
+    }
+
+    .cloud-1 {
+        width: 120px;
+        height: 40px;
+        top: 18%;
+        left: 5%;
+    }
+
+    .cloud-2 {
+        width: 150px;
+        height: 50px;
+        right: 5%;
+        bottom: 20%;
+    }
+
+    .cloud-3 {
+        width: 100px;
+        height: 35px;
+        top: 45%;
+        left: 50%;
+    }
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+.modal-box {
+    width: min(90%, 420px);
+    background: white;
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.modal-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.modal-box h2 {
+    margin: 0;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+}
+
+.modal-box input,
+.modal-box textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 12px;
+    font: inherit;
+    outline: none;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.modal-box input:hover,
+.modal-box textarea:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.modal-box input:focus,
+.modal-box textarea:focus {
+    border-color: #b8b8ff;
+    box-shadow: 0 0 0 4px rgba(184, 184, 255, 0.2);
+}
+
+.modal-box textarea {
+    min-height: 120px;
+    resize: none;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.modal-actions button {
+    border: none;
+    padding: 0.75rem 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font: inherit;
+    background-color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.modal-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    background-color: var(--text-secondary);
+    color: white;
+}
+
+.modal-actions button:active {
+    transform: translateY(0);
+}
+
+/* ===== 13. SMALL PHONE ===== */
+@media (max-width: 480px) {
+    .header-wrap {
+        padding: 0 0.75rem;
+        gap: 0.55rem;
+    }
+
+    .burger-wrap,
+    .title-wrap,
+    .timestamp-wrap {
+        min-height: 90px;
+        padding: 0.85rem;
+    }
+
+    .title-wrap h1 {
+        font-size: clamp(1.05rem, 6vw, 1.45rem);
+    }
+
+    .menu-label,
+    .label {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+    }
+
+    .timestamp-text {
+        font-size: 0.72rem;
+    }
+
+    .icon-group {
+        gap: 0.55rem;
+    }
+
+    .action-btn {
+        font-size: 0.95rem;
+        padding: 5px;
     }
 }

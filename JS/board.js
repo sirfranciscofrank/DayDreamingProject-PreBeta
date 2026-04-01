@@ -33,3 +33,83 @@ document.addEventListener("DOMContentLoaded", () => {
   showTime();
   setInterval(showTime, 1000);
 });
+
+// Cloud Control Logic
+const addCloudBtn = document.getElementById("addCloudBtn");
+const deleteCloudBtn = document.getElementById("deleteCloudBtn");
+const todoBtn = document.getElementById("todoBtn");
+
+const cloudContainer = document.getElementById("cloudContainer");
+const cloudModal = document.getElementById("cloudModal");
+const createCloudBtn = document.getElementById("createCloudBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+
+const cloudTitleInput = document.getElementById("cloudTitle");
+const cloudDescInput = document.getElementById("cloudDesc");
+
+let cloudCount = 0;
+
+addCloudBtn.addEventListener("click", openModal);
+cancelBtn.addEventListener("click", closeModal);
+createCloudBtn.addEventListener("click", handleCreateCloud);
+
+deleteCloudBtn.addEventListener("click", () => {
+  console.log("Delete clicked");
+});
+
+todoBtn.addEventListener("click", () => {
+  console.log("To-do clicked");
+});
+
+function openModal() {
+  cloudModal.classList.remove("hidden");
+}
+
+function closeModal() {
+  cloudModal.classList.add("hidden");
+  resetModalInputs();
+}
+
+function resetModalInputs() {
+  cloudTitleInput.value = "";
+  cloudDescInput.value = "";
+}
+
+function handleCreateCloud() {
+  const title = cloudTitleInput.value.trim();
+  const desc = cloudDescInput.value.trim();
+
+
+  if (!title) {
+    alert("Please enter a title");
+    return;
+  }
+
+  cloudCount++;
+  const newCloud = createCloudNote(cloudCount, title, desc);
+  cloudContainer.appendChild(newCloud);
+
+  closeModal();
+}
+
+function createCloudNote(count, title, desc) {
+  const cloudNote = document.createElement("div");
+  cloudNote.classList.add("cloud-note");
+
+  const cloudTitle = document.createElement("h3");
+  cloudTitle.textContent = title;
+
+  const cloudDesc = document.createElement("p");
+  cloudDesc.textContent = desc || `Cloud ${count}`;
+
+  const randomTop = Math.floor(Math.random() * 70) + 10;
+  const randomLeft = Math.floor(Math.random() * 70) + 10;
+
+  cloudNote.style.position = "absolute";
+  cloudNote.style.top = `${randomTop}%`;
+  cloudNote.style.left = `${randomLeft}%`;
+
+  cloudNote.appendChild(cloudTitle);
+
+  return cloudNote;
+}
