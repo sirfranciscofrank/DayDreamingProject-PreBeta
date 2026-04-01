@@ -1,11 +1,18 @@
 Now the simpler meaning of the whole flow is:
 
-1.wait for page to load
-2.start live clock
-3.when user clicks Add Cloud, open modal
-4.user types title and description
-5.when user clicks Create, read input values
-6.store them in an object
-7.push that object into clouds
-8.create a real HTML cloud note
-9.append it to cloudContainer
+1. Wait for the page to fully load before running the script.
+2. Grab all important HTML elements and store them in elements.
+3. Create an empty clouds array to keep cloud data in memory.
+4. Start the live clock and update it every second.
+5. When the user clicks Add Cloud, open the modal.
+6. Reset old input and error state, then focus the title input.
+7. The user types a title and description.
+8. While typing, check the title field and switch between error and valid styles.
+9. When the user clicks Create, validate the title first.
+10. If the title is empty, show the error state and stop creation.
+11. If the title is valid, build a new cloud data object.
+12. Give that object an id, title, desc, and random top and left position.
+13. Push that object into the clouds array.
+14. Create a real HTML cloud note from that object.
+15. Append the cloud note into cloudContainer.
+16. Close the modal and reset the inputs for the next cloud.

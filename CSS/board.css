@@ -208,7 +208,6 @@ body {
 .cloud-note {
     position: absolute;
     z-index: 16;
-    transform: translate(-50%, -50%);
     min-width: 120px;
     min-height: 60px;
     padding: 0.9rem 1rem;
@@ -229,6 +228,74 @@ body {
     font-size: 0.95rem;
     color: var(--text-primary);
     pointer-events: auto;
+
+    animation: cloudJiggle 4.5s ease-in-out infinite;
+}
+
+@keyframes cloudJiggle {
+    0% {
+        transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg);
+    }
+    20% {
+        transform: translate(-50%, -50%) translate(-4px, -3px) rotate(-1deg);
+    }
+    40% {
+        transform: translate(-50%, -50%) translate(4px, 2px) rotate(1deg);
+    }
+    60% {
+        transform: translate(-50%, -50%) translate(-3px, 4px) rotate(-0.7deg);
+    }
+    80% {
+        transform: translate(-50%, -50%) translate(3px, -2px) rotate(0.7deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg);
+    }
+}
+
+/*Required Star*/
+.required-label,
+.field-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: "Jost", sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.required-label {
+    margin-top: 0.4rem;
+}
+
+.required-star {
+    color: #d64545;
+    font-weight: 600;
+    margin-left: 0.15rem;
+}
+
+#cloudTitle,
+#cloudDesc {
+    width: 100%;
+}
+
+#cloudTitle:invalid {
+    border: 1.5px solid #d64545;
+}
+
+#cloudTitle::placeholder {
+    color: rgba(60, 72, 102, 0.6);
+}
+
+/*Warning for no title*/
+#cloudTitle.input-error {
+  border: 1.5px solid #d64545;
+}
+
+#cloudTitle.input-error::placeholder {
+  color: #d64545;
+}
+#cloudTitle.input-valid {
+  border: 1.5px solid #35b86b;
 }
 
 /* ===== 9. DECORATIVE CLOUDS ===== */
