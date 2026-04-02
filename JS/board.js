@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // =========================
-  // ELEMENTS
-  // =========================
   const elements = {
     addCloudBtn: document.getElementById("addCloudBtn"),
     deleteCloudBtn: document.getElementById("deleteCloudBtn"),
@@ -15,11 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
     timestampText: document.querySelector(".timestamp-text")
   };
 
-  const clouds = [];
+  let clouds = loadClouds();
+  let isDeleteMode = false;
 
-  // =========================
-  // CLOCK
-  // =========================
+  // ── LocalStorage helpers ──────────────────────────────────────────
+  function loadClouds() {
+    try {
+      return JSON.parse(localStorage.getItem("clouds")) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function saveClouds() {
+    localStorage.setItem("clouds", JSON.stringify(clouds));
+  }
+  // ─────────────────────────────────────────────────────────────────
+
   function updateClock() {
     const now = new Date();
 
@@ -50,9 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // =========================
-  // MODAL
-  // =========================
   function openModal() {
     elements.cloudModal.classList.remove("hidden");
     resetTitleState();
@@ -75,9 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     elements.cloudTitleInput.classList.remove("input-error", "input-valid");
   }
 
-  // =========================
-  // CLOUD VALIDATION
-  // =========================
   function showTitleError() {
     elements.cloudTitleInput.value = "";
     elements.cloudTitleInput.placeholder = "Title is required *";
@@ -117,9 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showTitleValid();
   }
 
-  // =========================
-  // CLOUDS
-  // =========================
   function generateCloudData() {
     return {
       id: Date.now(),
@@ -130,9 +130,21 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function deleteCloudById(cloudId, cloudElement) {
+    const cloudIndex = clouds.findIndex(cloud => cloud.id === cloudId);
+
+    if (cloudIndex !== -1) {
+      clouds.splice(cloudIndex, 1);
+      saveClouds(); // persist deletion
+    }
+
+    cloudElement.remove();
+  }
+
   function createCloudNote(cloud) {
     const cloudNote = document.createElement("div");
     cloudNote.className = "cloud-note";
+    cloudNote.dataset.id = cloud.id;
     cloudNote.style.top = `${cloud.top}%`;
     cloudNote.style.left = `${cloud.left}%`;
 
@@ -143,6 +155,12 @@ document.addEventListener("DOMContentLoaded", () => {
     cloudDesc.textContent = cloud.desc;
 
     cloudNote.append(cloudTitle, cloudDesc);
+
+    cloudNote.addEventListener("click", () => {
+      if (!isDeleteMode) return;
+
+      deleteCloudById(cloud.id, cloudNote);
+    });
 
     return cloudNote;
   }
@@ -157,28 +175,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cloudData = generateCloudData();
     clouds.push(cloudData);
-
-    console.log("New cloud:", cloudData);
-    console.log("All clouds:", clouds);
+    saveClouds(); // persist new cloud
 
     renderCloud(cloudData);
     closeModal();
   }
 
-  // =========================
-  // TEMP BUTTONS
-  // =========================
   function handleDeleteClick() {
-    console.log("Delete clicked");
+    isDeleteMode = !isDeleteMode;
+
+    elements.deleteCloudBtn.classList.toggle("active-delete", isDeleteMode);
+    elements.cloudContainer.classList.toggle("delete-mode", isDeleteMode);
   }
 
   function handleTodoClick() {
-    console.log("To-do clicked");
+    alert("🚧 To-do feature is coming soon!");
   }
 
-  // =========================
-  // EVENTS
-  // =========================
   elements.addCloudBtn.addEventListener("click", openModal);
   elements.cancelBtn.addEventListener("click", closeModal);
   elements.createCloudBtn.addEventListener("click", handleCreateCloud);
@@ -186,9 +199,9 @@ document.addEventListener("DOMContentLoaded", () => {
   elements.todoBtn.addEventListener("click", handleTodoClick);
   elements.cloudTitleInput.addEventListener("input", handleTitleInput);
 
-  // =========================
-  // STARTUP
-  // =========================
+  // Render any clouds saved from a previous session
+  clouds.forEach(renderCloud);
+
   updateClock();
   setInterval(updateClock, 1000);
 });

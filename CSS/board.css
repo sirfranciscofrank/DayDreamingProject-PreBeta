@@ -630,3 +630,23 @@ body {
         padding: 5px;
     }
 }
+
+
+/*Cloud Deletion*/
+.active-delete {
+  outline: 2px solid red;
+}
+
+.cloud-note {
+  cursor: pointer;
+}
+
+#cloudContainer.delete-mode .cloud-note {
+  border: 2px dashed rgba(255, 0, 0, 0.35);
+}
+
+#cloudContainer.delete-mode .cloud-note:hover {
+  border: 2px solid red;
+  opacity: 0.75;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+}

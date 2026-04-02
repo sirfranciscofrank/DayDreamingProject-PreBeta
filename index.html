@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day Dreaming</title>
+    <title>Day Dreaming Pre-Beta</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -15,7 +15,7 @@
 
 <body>
     <main class="hero">
-         <div class="flash"></div>
+        <div class="flash"></div>
         <!-- atmospheric elements -->
         <div class="sun-glow"></div>
         <div class="horizon-line"></div>
@@ -43,6 +43,15 @@
 
     </main>
     <script src="JS/transistion.js"></script>
+    <script>
+        const hasVisited = localStorage.getItem("hasVisitedIntro");
+
+        if (hasVisited) {
+            window.location.replace("board.html");
+        } else {
+            localStorage.setItem("hasVisitedIntro", "true");
+        }
+    </script>
 </body>
 
 </html>

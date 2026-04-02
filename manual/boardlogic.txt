@@ -1,18 +1,138 @@
-Now the simpler meaning of the whole flow is:
+Cloud App Manual
 
-1. Wait for the page to fully load before running the script.
-2. Grab all important HTML elements and store them in elements.
-3. Create an empty clouds array to keep cloud data in memory.
-4. Start the live clock and update it every second.
-5. When the user clicks Add Cloud, open the modal.
-6. Reset old input and error state, then focus the title input.
-7. The user types a title and description.
-8. While typing, check the title field and switch between error and valid styles.
-9. When the user clicks Create, validate the title first.
-10. If the title is empty, show the error state and stop creation.
-11. If the title is valid, build a new cloud data object.
-12. Give that object an id, title, desc, and random top and left position.
-13. Push that object into the clouds array.
-14. Create a real HTML cloud note from that object.
-15. Append the cloud note into cloudContainer.
-16. Close the modal and reset the inputs for the next cloud.
+1. Add Cloud Handling
+
+- The script waits for the page to fully load before running.
+- It selects all important HTML elements and stores them inside the elements object.
+- When the user clicks the Add Cloud button, the modal opens.
+- Opening the modal resets old input values and validation state.
+- The title input is focused so the user can start typing immediately.
+- The user enters a title and description.
+- While the user types in the title field, the script checks whether the title is empty or valid.
+- If the title has text, the valid style is applied.
+- If the title is empty, the input returns to a neutral state.
+- When the user clicks the Create button, the script validates the title first.
+- If the title is empty, the script shows an error state, changes the placeholder, and stops the creation process.
+- If the title is valid, the script creates a new cloud data object.
+- The object contains:
+  - id
+  - title
+  - desc
+  - random top position
+  - random left position
+- The cloud object is pushed into the clouds array.
+- The new cloud is saved into localStorage.
+- A real HTML cloud note is created from that object.
+- The cloud note is appended into the cloudContainer.
+- The modal closes and the inputs are reset for the next cloud.
+
+2. Delete Handling
+
+- The app uses a variable called isDeleteMode to track whether delete mode is active.
+- By default, delete mode is set to false.
+- When the user clicks the Delete Cloud button, delete mode toggles on or off.
+- If delete mode is turned on:
+  - the delete button gets the active-delete style
+  - the cloud container gets the delete-mode class
+- This gives visual feedback that clouds can now be removed.
+- If delete mode is turned off:
+  - the active-delete style is removed
+  - the delete-mode class is removed
+- Every cloud note has its own click event listener.
+- If the user clicks a cloud while delete mode is off, nothing happens.
+- If the user clicks a cloud while delete mode is on:
+  - the script finds that cloud by id inside the clouds array
+  - removes it from the array
+  - saves the updated array into localStorage
+  - removes the cloud element from the page
+- This means deletion is both visual and permanent.
+
+3. Data Memorization Handling
+
+- The app uses localStorage to remember cloud data on the same browser and device.
+- When the page loads, the script runs loadClouds().
+- loadClouds() tries to read the "clouds" key from localStorage.
+- If cloud data exists, it is parsed from JSON into the clouds array.
+- If nothing exists, an empty array is used instead.
+- If JSON parsing fails, the function safely returns an empty array.
+- Whenever a new cloud is created, saveClouds() runs.
+- saveClouds() converts the clouds array into JSON text.
+- That JSON string is stored in localStorage under the "clouds" key.
+- Whenever a cloud is deleted, saveClouds() runs again.
+- This keeps localStorage synchronized with the current clouds array.
+- Because of this system, cloud notes remain even after page refresh.
+- When the page opens again, saved clouds are loaded and rendered back onto the board.
+
+4. Cloud Rendering Handling
+
+- After cloud data is loaded, the script renders all saved clouds.
+- It loops through the clouds array using forEach(renderCloud).
+- renderCloud() creates a real HTML cloud note from each cloud object.
+- createCloudNote() builds the visual cloud element.
+- Each note receives:
+  - class name
+  - dataset id
+  - title
+  - description
+  - top position
+  - left position
+- The cloud note is then appended into the cloudContainer.
+- This makes saved clouds appear on screen again after refresh.
+
+5. Modal Handling
+
+- openModal() removes the hidden class from the modal.
+- It resets old title validation state.
+- It focuses the title input.
+- closeModal() adds the hidden class back to the modal.
+- It clears the title and description inputs.
+- It also resets the title validation state.
+- The Cancel button triggers closeModal().
+- The Create button also closes the modal after successful cloud creation.
+
+6. Title Validation Handling
+
+- validateTitle() checks whether the title input is empty after trimming spaces.
+- If the title is empty:
+  - showTitleError() runs
+  - the input is cleared
+  - placeholder becomes "Title is required *"
+  - error styling is applied
+- If the title is valid:
+  - showTitleValid() runs
+  - error styling is removed
+  - valid styling is applied
+- handleTitleInput() runs while the user is typing.
+- This allows the title field to update visually in real time.
+
+7. Clock Handling
+
+- updateClock() creates a new Date object.
+- It extracts:
+  - day
+  - month
+  - year
+  - weekday
+  - hours
+  - minutes
+  - seconds
+- The date and time are formatted into a readable string.
+- If the timestamp element exists, the formatted time is displayed.
+- The script runs updateClock() once on page load.
+- Then setInterval(updateClock, 1000) updates it every second.
+
+8. To-do Button Handling
+
+- The To-do button has its own click event listener.
+- Right now, it is only a placeholder feature.
+- When clicked, it can alert the user with a message such as:
+  "This feature is coming soon!"
+- This allows the button to exist in the UI before the full feature is built.
+
+9. Intro Skip Handling
+
+- The intro page can use localStorage to remember whether the user has already visited.
+- On the first visit, the page stores a flag such as "hasVisitedIntro".
+- On later visits, the script checks that flag.
+- If the flag exists, the user is redirected straight to board.html.
+- This does not interfere with cloud saving because it uses a different localStorage key.
